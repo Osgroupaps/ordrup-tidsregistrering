@@ -99,3 +99,10 @@ header img{height:auto;max-height:46px;max-width:min(240px,45vw);flex:0 1 auto;m
 /* Ordrup: luft mellem logo og "Tidsregistrering" */
 .brand span{margin-top:16px;padding-top:12px;border-top:1px solid var(--bd);font-size:11.5px;letter-spacing:.14em;color:var(--ink2)}
 .authlogo span{display:block;margin-top:6px}
+
+/* Ordrup: logo og "Tidsregistrering" centreret øverst på Tid-siden */
+.toplogo{text-align:center;margin:4px 0 22px}
+.toplogo img{display:block;margin:0 auto;height:auto;width:min(300px,78vw);max-height:none}
+.toplogo span{display:block;margin-top:12px;font-size:12px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--ink2)}
+/* Ordrup: tydeligere logo i telefonens topbjælke */
+@media(max-width:899px){header img{max-height:none;height:auto;width:min(200px,52vw);max-width:none}header>b{display:none}}
