@@ -16,6 +16,8 @@ const kr=v=>Math.round(v).toLocaleString('da-DK')+' kr.';
 const todayS=()=>ymd(new Date());
 const TARGET=37*60;
 /* Afsender på bilag (ændres her, hvis firmaet skifter) */
+/* Standard-timepris for nye projekter (kan rettes pr. projekt) */
+const STD_RATE=1200;
 const FIRMA={n:'Ordrup Consulting ApS',cvr:'39358182',adr:'Søstrupvej 14, 4300 Holbæk'};
 function parseDur(t){t=String(t||'').trim().toLowerCase().replace(',','.');if(!t)return 0;let m;
  if(m=t.match(/^(\d+):(\d{1,2})$/))return +m[1]*60+ +m[2];
@@ -189,7 +191,7 @@ document.addEventListener('change',async ev=>{const t=ev.target;if(!t||!t.id)ret
   const d=await cvrLookup('search='+encodeURIComponent(v));if(d){$('#pv').value=String(d.vat)}}
  else if(t.id==='pv'){const v=t.value.replace(/\D/g,'');if(v.length!==8)return;
   const d=await cvrLookup('vat='+v);if(d&&$('#pcs').value==='__new'&&!$('#pc').value.trim())$('#pc').value=d.name}});
-function openProj(id){const p=id?S.projects[id]:{name:'',client:'',cvr:'',rate:'',active:true};const cl=clients();
+function openProj(id){const p=id?S.projects[id]:{name:'',client:'',cvr:'',rate:STD_RATE,active:true};const cl=clients();
  $('#modal').innerHTML=`<div class="ov" data-act="mclose"><div class="md" role="dialog" aria-modal="true"><h2>${id?'Redigér projekt':'Nyt projekt'}</h2>
  <label for="pn">Projektnavn</label><input id="pn" class="fl" value="${esc(p.name)}"><div class="g2"><div><label for="pcs">Kunde</label>${custSelect(p.client||'')}<input id="pc" class="fl" placeholder="Kundens navn" style="${cl.length&&(!p.client||cl.includes(p.client))?'display:none;':''}margin-top:8px" value="${esc(p.client||'')}"></div><div><label for="pv">Kundens CVR</label><input id="pv" class="fl" inputmode="numeric" value="${esc(p.cvr||'')}"><div id="pvh" class="mu" style="font-size:12px;margin-top:4px"></div></div></div>
  <label for="pr">Timepris (kr., kun synlig for administratorer)</label><input id="pr" class="fl" inputmode="numeric" value="${esc(p.rate||'')}">
